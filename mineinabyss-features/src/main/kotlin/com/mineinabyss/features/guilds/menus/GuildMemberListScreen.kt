@@ -30,14 +30,14 @@ import org.bukkit.inventory.ItemStack
 fun GuildUIScope.GuildMemberListScreen() {
     var line by remember { mutableStateOf(0) }
     val guildMembers = remember { player.getGuildMembers().sortedWith(compareBy { it.player.isConnected; it.player.name; it.rank.ordinal }) }
-
     Scrollable(
         guildMembers, line, ScrollDirection.VERTICAL,
-        nextButton = { ScrollDownButton(Modifier.at(0, 3).clickable { line++ }) },
+        nextButton = { ScrollDownButton(Modifier.at(0, 4).clickable { line++; this.clickType }) },
         previousButton = { ScrollUpButton(Modifier.at(0, 1).clickable { line-- }) },
-        NavbarPosition.START, null
+        navbarPosition=NavbarPosition.END,
+        navbarBackground=null
     ) { members ->
-        VerticalGrid(Modifier.at(1, 1).size(5, minOf(guildLevel + 1, 4))) {
+        VerticalGrid(Modifier.at(2,1).size(5, minOf(guildLevel + 1, 4))) {
             members.forEach { (rank, member) ->
                 Button(onClick = {
                     if (member != player && player.isCaptainOrAbove())
