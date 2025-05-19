@@ -6,7 +6,7 @@ import com.mineinabyss.components.relics.ShowStarCompassHud
 import com.mineinabyss.components.tools.ShowDepthMeterHud
 import com.mineinabyss.deeperworld.world.section.centerLocation
 import com.mineinabyss.deeperworld.world.section.section
-import com.mineinabyss.features.tools.depthmeter.getDepth
+import com.mineinabyss.features.tools.depthmeter.getAbyssDepth
 import com.mineinabyss.geary.papermc.tracking.entities.toGeary
 import me.clip.placeholderapi.expansion.PlaceholderExpansion
 import org.bukkit.attribute.Attribute
@@ -33,13 +33,13 @@ class Placeholders : PlaceholderExpansion() {
             "hud_always_armor" -> player.customHudData.alwaysShowArmor
             "hud_show_top_bar" -> (player.toGeary().has<ShowDepthMeterHud>() && player.toGeary().has<ShowStarCompassHud>())
             "hud_hide_armor_air_background" -> (!player.customHudData.alwaysShowAir && !player.customHudData.alwaysShowArmor)
-                    || ((player.getAttribute(Attribute.GENERIC_ARMOR)?.value ?: 0.0) > 0.0) || (player.remainingAir < player.maximumAir)
+                    || ((player.getAttribute(Attribute.ARMOR)?.value ?: 0.0) > 0.0) || (player.remainingAir < player.maximumAir)
 
             "layer" -> player.location.layer?.name
             "layer_simple" -> player.simpleLayerName
             "whistle" -> player.getLayerWhistleForHud()
             "section" -> player.location.section?.name ?: "Unmanaged Section"
-            "depth" -> player.getDepth()
+            "depth" -> player.location.getAbyssDepth()
 
             "compass" -> player.getCompassAngle().unicode
             "compass_angle" -> player.getCompassAngle().angle
